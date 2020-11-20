@@ -4,17 +4,19 @@
     
     $language;
 
-    if ( isset($_GET["lang"]) ) {
+    if (isset($_GET["lang"])) {
         if (!empty($_GET["lang"])) {
             $language = $_GET["lang"];
-        }   
-    } 
+        }
+    }
 
-    if (!isset($language)) $language = 'pt'; 
+    if (!isset($language)) {
+        $language = 'pt';
+    }
 
     $langs = [];
 
-    $stmt = $conn->prepare("SELECT * FROM `lang`");
+    $stmt = $conn->prepare("SELECT * FROM `lang` ORDER BY `default_lang` DESC");
                             
     $stmt->execute();
 
@@ -23,11 +25,11 @@
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            array_push($langs, $row["country_code"]);
+            $langs[$row["country_code"]] = $row;
         }
     }
 
-    if (!in_array($language, $langs)) {
+    if (!isset($langs[$language])) {
         $language = "pt";
     }
 
@@ -39,11 +41,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glossário</title>
-    <link rel="stylesheet" href="Assets/style.css">
-    <script defer src="Assets/script.js"></script>
+    <link rel="stylesheet" href="Assets/css/flag-icon.min.css">
+    <link rel="stylesheet" href="Assets/css/style.css">
+    <script defer src="Assets/js/script.js"></script>
 </head>
 <body>
-<h1>Glossário</h1>
+
+    <div class="div_title_languages">
+    <h1>Glossário</h1>
+        <div class="languages">
+        <div class="active-lang">
+    
+            <?php
+
+                echo "<div class='icon'>
+                        <span class='flag-icon flag-icon-$language'></span> 
+                    </div>
+
+                    {$langs[$language]['country_name']}
+                ";
+
+            ?>
+
+        </div>
+
+            <div class="dropdown-content">
+                <?php
+
+                    foreach ($langs as $lang) {
+                        if ($lang["country_code"] !== $language) {
+                            $currentLanguageCode = $lang["country_code"];
+                            $currentLanguageName = $lang["country_name"];
+                            
+                            echo "<a href='?lang=$currentLanguageCode'><span class='flag-icon flag-icon-$currentLanguageCode'></span> $currentLanguageName</a>";
+                        }
+                    }
+
+                ?>
+
+            </div>
+        </div>
+</div>
+
     <header>
         <div class="anchors">
             <ul> 
@@ -100,9 +139,7 @@
 
             if ($result->num_rows > 0) { //
                 while ($row = $result->fetch_assoc()) {
-                    
                     if ($letter != 27) {
-
                         $currentLetterIndex = array_search(strtoupper(substr($row['word_name'], 0, 1)), $arrayAlphabet);
 
                         if ($currentLetterIndex != $letter) { // Se não começar pela mesma letra que anteriormente, mudar de seção
@@ -133,10 +170,10 @@
                     }
                     
                     
-                        $name = htmlspecialchars($row['word_name'], ENT_QUOTES, 'UTF-8');
-                        $definition = htmlspecialchars($row['def'], ENT_QUOTES, 'UTF-8');
+                    $name = htmlspecialchars($row['word_name'], ENT_QUOTES, 'UTF-8');
+                    $definition = htmlspecialchars($row['def'], ENT_QUOTES, 'UTF-8');
                     
-                        echo "<div class='item'>
+                    echo "<div class='item'>
                             <div class='title'>
                                 <span>$name</span>
                             </div>

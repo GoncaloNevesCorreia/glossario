@@ -1,0 +1,249 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:900);
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+
+.div_title_languages {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.div_title_languages>h1 {
+    color: #111;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 5rem;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.wrapper {
+    margin-top: 5%;
+    padding: 0 5% 0 5%;
+}
+
+.title {
+    font-family: Montserrat;
+    font-size: 1.3rem;
+    float: left;
+    padding: 10px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(162, 237, 86, 1) 20%, rgba(253, 220, 50, 1) 100%);
+    box-shadow: 0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05), 0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
+    transform: translate(-20px, -20px);
+}
+
+.definition {
+    display: block;
+    padding: 10px 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.20);
+}
+
+section {
+    padding-bottom: 50px;
+}
+
+.separator {
+    font-family: Montserrat;
+    font-size: 2rem;
+    color: black;
+    border-bottom: 2px solid #ddd;
+}
+
+.item {
+    margin: 50px 30px;
+}
+
+.anchors {
+    padding: 10px 30px;
+}
+
+.anchors ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    font-size: 1.4rem;
+}
+
+.anchors ul li {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.anchors ul li>a {
+    color: #555 !important;
+    text-decoration: none;
+    padding: 5px 10px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    line-height: 40px;
+    transition: all 0.1s ease-out;
+}
+
+.anchors ul li>a:hover {
+    background: #e7e7e7;
+}
+
+.anchors ul li>a.active {
+    background: #e7e7e7;
+}
+
+section a.anchor {
+    display: block;
+    position: relative;
+    top: -80px;
+    visibility: hidden;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    box-shadow: 0 20px 35px -26px rgba(0, 0, 0, 0.2);
+}
+
+header img {
+    height: auto;
+    width: 60px;
+}
+
+
+/* Style The Dropdown Button */
+
+.active-lang {
+    color: rgb(40, 41, 54);
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    position: relative;
+    transition: color 200ms ease;
+}
+
+.icon {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 10px;
+    background-color: rgb(40, 41, 54);
+    border-radius: 25px;
+    position: absolute;
+    left: -2.5rem;
+    display: flex;
+    justify-content: flex-start;
+    transition: width 200ms ease;
+    z-index: -1;
+}
+
+.languages:hover .icon,
+.languages:focus .icon {
+    width: 140%;
+}
+
+.languages:hover .active-lang,
+.languages:focus .active-lang {
+    color: white;
+}
+
+.icon>span {
+    margin-left: 0.9rem;
+    transition: margin 200ms ease;
+}
+
+.languages:hover .icon>span,
+.languages:focus .icon>span {
+    margin-left: 1.6rem;
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+
+.languages {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+}
+
+
+/* Dropdown Content (Hidden by Default) */
+
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 140%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    left: -2.5rem;
+    transition: max-height 400ms ease-in-out;
+    border-radius: 16px;
+}
+
+
+/* Links inside the dropdown */
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    border-radius: 16px;
+}
+
+.dropdown-content a>span {
+    margin-right: 10px;
+}
+
+
+/* Change color of dropdown links on hover */
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+
+/* Show the dropdown menu on hover */
+
+.languages:hover .dropdown-content,
+.languages:focus .dropdown-content {
+    max-height: 1000%;
+}
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+.alignRight {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 5%;
+}
+
+@media (max-width: 700px) {
+    .div_title_languages>h1 {
+        font-size: 3rem;
+    }
+}
