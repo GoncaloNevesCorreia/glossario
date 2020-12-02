@@ -21,8 +21,8 @@ window.addEventListener("scroll", event => {
         section = section.parentElement;
 
         if (
-            section.offsetTop <= fromTop + 80 &&
-            section.offsetTop + section.offsetHeight > fromTop + 80
+            section.offsetTop <= fromTop + 81 &&
+            section.offsetTop + section.offsetHeight > fromTop + 81
         ) {
             link.classList.add("active");
         } else {

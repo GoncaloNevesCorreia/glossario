@@ -1,9 +1,5 @@
 <?php
 
-
-
-
-
 function InsertDefInDB($word_id, $definitions, $formatOfValuesForOneRow, $langs, $conn)
 {
     $formatOfValues = "";
@@ -53,7 +49,7 @@ function InsertNewWord($word_name, $conn)
 
 function getLangs($conn)
 {
-    $stmt = $conn->prepare("SELECT * FROM lang");
+    $stmt = $conn->prepare("SELECT * FROM lang ORDER BY default_lang DESC");
                         
     $stmt->execute();
 
@@ -70,4 +66,38 @@ function getLangs($conn)
     }
 
     return $langs;
+}
+
+function getDefinitions($conn, $word_id, $language = "")
+{   
+    // . ($language !== "") ? "country_code = $language" : ""
+
+    $query = "SELECT * FROM `view_definitions` WHERE `word_id` = ?";
+
+    $stmt = $conn->prepare($query);
+        
+    $stmt->bind_param("i", $word_id);
+        
+    $stmt->execute();
+
+    $result = $stmt-> get_result();
+
+    $response = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $response[$row["country_code"]] = $row;
+        }
+    }
+
+    return $response;
+};
+
+function addLanguageToWordDefinition($conn, $word_id, $language) {
+    $stmt = $conn->prepare("INSERT INTO `definitions`(`word_id`, `country_code`) VALUES (?, ?)");
+                            
+    $stmt->bind_param('is', $word_id, $language);
+
+    $stmt->execute();
+
+    $stmt->close();
 }
